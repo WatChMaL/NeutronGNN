@@ -14,10 +14,11 @@ Python implementation of the training engine and framework to build, train and t
 
 ```bash
 .
-+-- plot_utils                          # Tools for visualizing model performance and dataset features
-  +-- mpmt_visual.py
-  +-- notebook_utils.py
-  +-- plot_utils.py
++-- visualisation                       # Tools for visualizing model performance and dataset features
+  +-- detector_geometry.ipynb
+  +-- full_geo_dump.npz
+  +-- mPMT_to_row_col.csv
+  +-- visualisation.ipynb
 +-- root_utils                          # Tools for interacting with the ROOT files from the WCSim simulations
   +-- pos_utils.py
 +-- README.md                           # README documentation for the repository
