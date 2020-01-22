@@ -105,12 +105,6 @@ if __name__ == '__main__':
                                  shape=(num_nonzero_events, 2),
                                  dtype=dtype_angles)
 
-
-    # 2112 -> neutron 22 -> gamma, 11 -> electron, 13 -> muon
-    # corresponds to labelling used in CNN with only barrel
-    #IWCDmPMT_4pi_full_tank_gamma_E0to1000MeV_unif-pos-R371-y521cm_4pi-dir_3000evts_329.npz has an event with pid 11 though....
-    #pid_to_label = {2112:0, 11:1}
-
     # Offsets define indices of arrays to use
     offset = 0
     offset_next = 0
@@ -180,6 +174,8 @@ if __name__ == '__main__':
         dset_energies[offset:offset_next,:] = energy[file_indices].reshape(-1,1)
         dset_positions[offset:offset_next,:,:] = position[file_indices].reshape(-1,1,3)
 
+        # Set label for particle type
+        # 0: 2112 == neutron, 1: 11 == electron
         labels = np.full(pid.shape[0], -1)
         labels[pid==2112] = 0
         labels[pid==11] = 1
