@@ -9,7 +9,9 @@ import pickle
 
 class WCH5Dataset(Dataset):
     """
-    Dataset storing image-like data from Water Cherenkov detector
+    Dataset storing data from Water Cherenkov detector
+    Data a fixed length array with elements [q, t, pos(x,y,z), dir(x,y,z)]
+    Select only hits pmts using nhits. Rest are zeros.
     memory-maps the detector data from hdf5 file
     The detector data must be uncompresses and unchunked
     labels are loaded into memory outright
@@ -24,7 +26,7 @@ class WCH5Dataset(Dataset):
         pass
 
 
-    def __init__(self, path, edge_index_pickle, nodes=15808,
+    def __init__(self, path,
                  transform=None, pre_transform=None, pre_filter=None,
                  use_node_attr=False, use_edge_attr=False, cleaned=False):
 
@@ -34,6 +36,7 @@ class WCH5Dataset(Dataset):
         f=h5py.File(path,'r')
         hdf5_event_data = f["event_data"]
         hdf5_labels=f["labels"]
+        hdf5_nhits=f["nhits"]
 
         assert hdf5_event_data.shape[0] == hdf5_labels.shape[0]
 
@@ -48,29 +51,19 @@ class WCH5Dataset(Dataset):
 
         #this will fit easily in memory even for huge datasets
         self.labels = np.array(hdf5_labels)
-        self.nodes = nodes
-        self.load_edges(edge_index_pickle)
+        self.nhits = np.array(hdf5_nhits)
 
         self.transform=transform
 
-    def load_edges(self, edge_index_pickle):
-        edge_index = torch.zeros([self.nodes, self.nodes], dtype=torch.int64)
-
-        with open(edge_index_pickle, 'rb') as f:
-            edges = pickle.load(f)
-
-            for k,vs in edges.items():
-                for v in vs:
-                    edge_index[k,v] = 1
-
+    def load_edges(self, nhits):
+        edge_index = torch.ones([nhits, nhits], dtype=torch.int64)
         self.edge_index=edge_index.to_sparse()._indices()
 
     def get(self, idx):
-        x = torch.from_numpy(self.event_data[idx])
+        nhits = self.nhits[idx]
+        x = torch.from_numpy(self.event_data[idx, :nhits, :])
         y = torch.tensor([self.labels[idx]], dtype=torch.int64)
-
-        #if self.transform:
-        #    x = self.transform(x)
+        self.load_edges(nhits)
 
         return Data(x=x, y=y, edge_index=self.edge_index)
 
