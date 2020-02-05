@@ -16,10 +16,10 @@ from torch_geometric.nn import global_max_pool
 class Net(torch.nn.Module):
     def __init__(self, w1=8, w2=32, w3=128):
         super(Net, self).__init__()
-        self.conv1 = GCNConv(2, w1, cached=False)
+        self.conv1 = GCNConv(8, w1, cached=False)
         self.conv2 = GCNConv(w1, w2, cached=False)
         self.conv3 = GCNConv(w2, w3, cached=False)
-        self.linear = Linear(w3, 3)
+        self.linear = Linear(w3, 2)
 
     def forward(self, batch):
         x, edge_index, batch_index = batch.x, batch.edge_index, batch.batch
