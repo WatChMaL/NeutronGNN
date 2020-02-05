@@ -52,10 +52,10 @@ class Engine(ABC):
         # Create the dataset object
         if config.use_encoded_data:
             out = get_loaders_encoded(config.data_path, config.indices_file,
-                          config.edge_index_pickle, config.batch_size, config.num_data_workers)
+                          config.batch_size, config.num_data_workers)
         else:
             out = get_loaders(config.data_path, config.indices_file,
-                          config.edge_index_pickle, config.batch_size, config.num_data_workers)
+                          config.batch_size, config.num_data_workers)
 
         self.train_loader, self.val_loader, self.dataset = out
 
