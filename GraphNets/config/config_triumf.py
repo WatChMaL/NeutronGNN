@@ -6,19 +6,19 @@ config = EasyDict()
 
 ## Model
 config.model_name = "gcn_kipf"
-config.model_kwargs = {"w1":4, "w2":8, "w3":16}
+config.model_kwargs = {"w1":16, "w2":16, "w3":16}
 
 ## Data paths
-config.data_path = "/home/jwalker/data/NeutronGNN/iwcd_mpmt_shorttank_neutrongnn_trainval.h5"
-config.indices_file = "/home/jwalker/data/NeutronGNN/iwcd_mpmt_shorttank_neutrongnn_trainval_idxs.npz"
+config.data_path = "/fast_scratch/NeutronGNN/iwcd_mpmt_shorttank_neutrongnn_trainval.h5"
+config.indices_file = "/fast_scratch/NeutronGNN/iwcd_mpmt_shorttank_neutrongnn_trainval_idxs.npz"
 
 ## Log location
-config.dump_path = "/home/jwalker/data/NeutronGNN/dump/" + config.model_name
+config.dump_path = "/fast_scratch/NeutronGNN/dump/" + config.model_name
 
 ## Computer parameters
 config.num_data_workers = 0 # Sometime crashes if we do multiprocessing
 config.device = 'gpu'
-config.gpu_list = [0]
+config.gpu_list = [1]
 
 ## Optimizer parameters
 config.optimizer = "Adam"
@@ -30,7 +30,7 @@ config.scheduler_step = 190
 
 ## Training parameters
 config.batch_size = 64
-config.epochs = 10
+config.epochs = 5
 
 ## Logging parameters for training
 config.report_interval = 50
@@ -40,4 +40,4 @@ config.valid_interval   = 200
 ## Validating parameters
 config.validate_batch_size = 64
 config.validate_dump_interval = 256
-config.use_encoded_data = True
+config.use_encoded_data = False
