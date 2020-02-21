@@ -16,6 +16,7 @@ def parse_args():
                         help="Path to output file")
     parser.add_argument('--val_split', type=float, default=0.1)
     parser.add_argument('--test_split', type=float, default=0.1)
+    parser.add_argument('--exc_split', type=float, default=0.0)
     args = parser.parse_args()
     return args
 
@@ -33,7 +34,8 @@ if __name__ == '__main__':
     indices = np.random.permutation(lines)
     val_end = np.ceil(lines * config.val_split).astype(np.int)
     test_end = val_end + np.ceil(lines * config.test_split).astype(np.int)
+    exc_end = test_end + np.ceil(lines * config.exc_split).astype(np.int)
 
-    np.savez(config.output_file, train_idxs=indices[test_end:],
-            val_idxs=indices[:val_end], test_idxs=indices[val_end:test_end])
+    np.savez(config.output_file, train_idxs=indices[exc_end:],
+            val_idxs=indices[:val_end], test_idxs=indices[val_end:test_end], exc_idxs=indices[test_end:exc_end])
 
