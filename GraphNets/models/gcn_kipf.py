@@ -24,9 +24,9 @@ class Net(torch.nn.Module):
     def forward(self, batch):
         x, edge_index, batch_index = batch.x, batch.edge_index, batch.batch
         x = F.relu(self.conv1(x, edge_index))
-        x = F.dropout(x, training=self.training)
+        #x = F.dropout(x, training=self.training)
         x = F.relu(self.conv2(x, edge_index))
-        x = F.dropout(x, training=self.training)
+        #x = F.dropout(x, training=self.training)
         x = self.conv3(x, edge_index)
         x = global_max_pool(x, batch_index)
         x = self.linear(x)
