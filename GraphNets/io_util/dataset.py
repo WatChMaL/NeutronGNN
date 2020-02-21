@@ -60,7 +60,8 @@ class WCH5Dataset(Dataset):
         self.edge_index=edge_index.to_sparse()._indices()
 
     def get(self, idx):
-        nhits = self.nhits[idx]
+        #nhits = self.nhits[idx]
+        nhits = 300
         x = torch.from_numpy(self.event_data[idx, :nhits, :])
         y = torch.tensor([self.labels[idx]], dtype=torch.int64)
         self.load_edges(nhits)
