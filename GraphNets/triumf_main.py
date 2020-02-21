@@ -21,7 +21,7 @@ if __name__ == '__main__':
     engine.save_state()
 
     #Validation
-    models = find_top_models(engine.dirpath, 5)
+    models = find_top_models(engine.dirpath, 1)
     for model in models:
         engine.load_state(osp.join(engine.dirpath, model))
         engine.validate("validation", name=osp.splitext(model)[0])
