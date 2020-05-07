@@ -119,9 +119,9 @@ class EngineGraph(Engine):
 
                     val_loss /= num_val_batches
                     val_acc /= num_val_batches
-                    if iteration > next_scheduler:
-                        self.scheduler.step(val_loss)
-                        next_scheduler += scheduler_step
+#                    if iteration > next_scheduler:
+#                        self.scheduler.step(val_loss)
+#                        next_scheduler += scheduler_step
 
 
                     # Record the validation stats to the csv
