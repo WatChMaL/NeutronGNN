@@ -6,7 +6,7 @@ config = EasyDict()
 
 ## Model
 config.model_name = "gcn_kipf"
-config.model_kwargs = {"w1":16, "w2":16, "w3":16}
+config.model_kwargs = {"w1":10, "w2":12, "w3":8}
 
 ## Data paths
 config.data_path = "/fast_scratch/NeutronGNN/iwcd_mpmt_shorttank_neutrongnn_trainval.h5"
@@ -22,7 +22,8 @@ config.gpu_list = [1]
 
 ## Optimizer parameters
 config.optimizer = "Adam"
-config.optimizer_kwargs = {"lr":0.01, "weight_decay":5e-4}
+config.optimizer_kwargs = {"lr":1e-3}
+#config.optimizer_kwargs = {"lr":0.01, "weight_decay":5e-4}
 
 ## Scheduler parameters
 config.scheduler_kwargs = {"mode":"min", "min_lr":1e-6, "patience":1, "verbose":True}
