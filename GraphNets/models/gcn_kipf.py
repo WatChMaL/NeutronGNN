@@ -11,6 +11,8 @@ from torch.nn import Linear
 import torch.nn.functional as F
 
 from torch_geometric.nn import GCNConv
+from torch_geometric.nn import global_add_pool
+from torch_geometric.nn import global_mean_pool
 from torch_geometric.nn import global_max_pool
 
 class Net(torch.nn.Module):
@@ -28,6 +30,6 @@ class Net(torch.nn.Module):
         x = F.relu(self.conv2(x, edge_index))
         #x = F.dropout(x, training=self.training)
         x = self.conv3(x, edge_index)
-        x = global_max_pool(x, batch_index)
+        x = global_add_pool(x, batch_index)
         x = self.linear(x)
         return F.log_softmax(x, dim=1)
